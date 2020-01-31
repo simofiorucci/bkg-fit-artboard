@@ -3,7 +3,7 @@
 Illustrator CC script
 ======
 Pre-requisites:
-- requires rgbToHex.jsx in the same folder of the script
+- requires rgbToHex.jsx in the /helpers folder
 ======
 Initial scenario:
 - An active .ai document
@@ -27,7 +27,7 @@ Usage:
 */
 
 function main() {
-	#include "rgbToHex.jsx"
+	#include "helpers/rgbToHex.jsx"
 
 	// check if there is an active document to work on
 	try {
