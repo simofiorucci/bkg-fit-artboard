@@ -3,7 +3,7 @@
 Illustrator CC script
 ======
 Pre-requisites:
-- requires rgbToHex.jsx in the /helpers folder
+- requires rgbToHex.jsx and colorPicker.js in the /helpers folder
 ======
 Initial scenario:
 - An active .ai document
@@ -23,12 +23,16 @@ Options:
 Usage:
 1. Create a new document or open an existing one
 2. Run this script
+======
+Credits:
+- colorPicker.js is created by smallpath https://github.com/smallpath/adobe-color-picker
 
 */
 
-function main() {
-	#include "helpers/rgbToHex.jsx"
+#include "helpers/rgbToHex.jsx"
+#include "helpers/colorPicker.js"
 
+function main() {
 	// check if there is an active document to work on
 	try {
 		var activeDoc = app.activeDocument
@@ -42,6 +46,7 @@ function main() {
 	var arts = activeDoc.artboards
 	// check if there is an active artboard
 	if (arts.length > 0) {
+		pickedColor = floatToByte(colorPicker());
 		var bkgLayer = activeDoc.layers.add()
 		bkgLayer.name = "background-color"
 		bkgLayer.zOrder(ZOrderMethod.SENDTOBACK)
@@ -53,17 +58,36 @@ function main() {
 			artSizeAndPos[2],
 			-artSizeAndPos[3]
 		)
-		bkgRect.fillColor.red = 255
-		bkgRect.fillColor.green = 64
-		bkgRect.fillColor.blue = 129
-		bkgRect.stroked = false
-		bkgRectFillToHex = fullColorToHex(bkgRect.fillColor.red, bkgRect.fillColor.green, bkgRect.fillColor.blue)
-		bkgRect.name = 'BKG #' + bkgRectFillToHex
+		setFillAndStroke(bkgRect, pickedColor, false)
+		nameWithFillColor(bkgRect, 'BKG')
 	} else {
 		alert('Please select an artboard')
 	}
 }
 
 // functions
+
+function floatToByte(floatColor) {
+	for (var i=0; i<3; i++) {
+		floatColor[i] = floatColor[i]*255
+	}
+	return floatColor
+}
+
+function setRgbFill(item, color) {
+	item.fillColor.red = color[0]
+	item.fillColor.green = color[1]
+	item.fillColor.blue = color[2]
+}
+
+function setFillAndStroke(rect, color, isStroked) {
+	setRgbFill(rect, color)
+	rect.stroked = isStroked
+}
+
+function nameWithFillColor(item, name) {
+	itemColorToHex = fullColorToHex(item.fillColor.red, item.fillColor.green, item.fillColor.blue)
+	item.name = name + ' #' + itemColorToHex
+}
 
 main()
