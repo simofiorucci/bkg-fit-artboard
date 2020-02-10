@@ -1,4 +1,4 @@
-# Create a colorful backgroud that fits the artboard
+# Create a colorful background that fits the artboard
 
 > An Adobe Illustrator JS script for setting a plain color as the background of your active document.
 
@@ -18,12 +18,12 @@ An active `.ai` document.
 
 This is basically what happens behind the scenes:
 
-1. Lets the user select a desired background color using a color picker (or directly typing its HEX/HSB/RGB code).
+1. Lets the user select the desired background color using a color picker (or directly typing its HEX/HSB/RGB code).
 2. Creates a new layer and renames it.
 3. Sends it to back (Z-position).
 4. Creates a rectangle inside the new layer.
 5. Fits its size and position to the selected artboard ones.
-6. Sets its fill color to the desirede one.
+6. Sets its fill color to the desired one.
 7. Sets its border color to null.
 8. Renames the rectangle with reference to the HEX code of the fill color
 
